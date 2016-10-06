@@ -11,8 +11,13 @@ defmodule ImageBoard.BoardChannel do
     {:error, %{reason: "Unathorized"}}
   end
 
-  def handle_in("new_message", %{"body" => body}, socket) do
-    broadcast! socket, "new_message", %{body: body}
+  def handle_in("new_message", %{"body" => body, "username" => username}, socket) do
+    data = %{
+      body: body,
+      username: username
+    }
+
+    broadcast! socket, "new_message", data
 
     {:noreply, socket}
   end

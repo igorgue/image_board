@@ -61,8 +61,8 @@ let newMessage = $("#new-message")
 let username = $("#username")
 let post = $("#post")
 
-let formatText = text => {
-  return `<li class="message-item">${text}</li>`
+let formatText = (username, text) => {
+  return `<li class="message-item">${text} by ${username}</li>`
 }
 
 channel.join()
@@ -70,12 +70,14 @@ channel.join()
   .receive("error", resp => { console.log("Unable to join", resp) })
 
 post.on("click", event => {
-  console.log(newMessage.val())
-  channel.push("new_message", {body: newMessage.val()})
+  channel.push("new_message", {
+    body: newMessage.val(),
+    username: username.val() === "" ? "anonymous" : username.val()
+  })
 })
 
 channel.on("new_message", payload => {
-  messages.append(formatText(payload.body))
+  messages.append(formatText(payload.username, payload.body))
 })
 
 export default socket
