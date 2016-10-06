@@ -1,0 +1,5 @@
+<div id="messages"></div>
+<textarea id="new-message"></textarea>
+<br />
+<input id="username" type="text" placeholder="username"></input>
+<input id="post" type="button" value="Post"></input>
